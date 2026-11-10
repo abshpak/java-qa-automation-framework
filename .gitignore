@@ -1,0 +1,20 @@
+# Build
+target/
+out/
+
+# IDE
+.idea/
+*.iml
+
+# Reports
+allure-results/
+allure-report/
+.allure/
+
+# Local secrets / overrides
+*.local.properties
+.env
+
+# OS
+Thumbs.db
+.DS_Store
