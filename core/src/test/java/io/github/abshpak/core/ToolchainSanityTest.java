@@ -33,6 +33,5 @@ class ToolchainSanityTest {
         assertThat(actual)
             .returns(expectedName, SampleInfo::getName)
             .returns(expectedCount, SampleInfo::getCount);
-
     }
 }
