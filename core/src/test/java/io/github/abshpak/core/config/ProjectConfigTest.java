@@ -11,11 +11,11 @@ class ProjectConfigTest {
     @Test
     @DisplayName("Настройки читаются из config.properties")
     void shouldReadValuesWhenConfigFileExists() {
-        //Arrange
+        // Arrange
         var expectedBaseUrl = "https://example.com";
         var expectedTimeoutSeconds = 10;
 
-        // ActProjectConfig
+        // Act
         var config = ConfigFactory.create(ProjectConfig.class);
 
         // Assert
