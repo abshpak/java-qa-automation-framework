@@ -14,7 +14,7 @@ class ProjectConfigTest {
 
     @Test
     @DisplayName("Адреса берутся из файла окружения")
-    void shouldReadBaseUrlFromEnvFileWhenEnvIsSet() {
+    void shouldReadBaseUrlsFromEnvFileWhenEnvIsSet() {
         // Arrange
         var expectedApiBaseUrl = "https://api.test.example.com";
         var expectedUiBaseUrl = "https://ui.test.example.com";
