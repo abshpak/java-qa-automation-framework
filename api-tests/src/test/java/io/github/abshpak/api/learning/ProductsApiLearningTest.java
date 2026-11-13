@@ -5,6 +5,7 @@ import io.github.abshpak.core.config.ProjectConfig;
 import io.restassured.http.ContentType;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -12,7 +13,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
 
-public class ProductsApiLearningTest {
+/**
+ * Учебный пример: REST Assured напрямую, без слоёв фреймворка.
+ * Показывает "сырой" запрос given/when/then для сравнения с
+ * {@link io.github.abshpak.api.products.GetProductsTests},
+ * где тот же запрос идёт через Service → Client → Raw.
+ * В рабочих тестах REST Assured напрямую не используется.
+ */
+@Tag("learning")
+class ProductsApiLearningTest {
 
     private final ProjectConfig config = ConfigFactory.create(ProjectConfig.class);
 
