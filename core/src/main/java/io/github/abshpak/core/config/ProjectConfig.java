@@ -9,8 +9,11 @@ import org.aeonbits.owner.Config;
 })
 public interface ProjectConfig extends Config {
 
-    @Key("base.url")
-    String baseUrl();
+    @Key("api.base.url")
+    String apiBaseUrl();
+
+    @Key("ui.base.url")
+    String uiBaseUrl();
 
     @Key("timeout.seconds")
     @DefaultValue("10")

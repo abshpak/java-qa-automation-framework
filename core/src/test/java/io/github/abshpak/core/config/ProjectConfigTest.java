@@ -13,16 +13,18 @@ class ProjectConfigTest {
     private static final String OVERRIDE_BASE_URL = "https://override.example.com";
 
     @Test
-    @DisplayName("Значение берётся из файла окружения")
+    @DisplayName("Адреса берутся из файла окружения")
     void shouldReadBaseUrlFromEnvFileWhenEnvIsSet() {
         // Arrange
-        var expectedBaseUrl = "https://test.example.com";
+        var expectedApiBaseUrl = "https://api.test.example.com";
+        var expectedUiBaseUrl = "https://ui.test.example.com";
 
         // Act
         var config = ConfigFactory.create(ProjectConfig.class);
 
         // Assert
-        assertThat(config.baseUrl()).isEqualTo(expectedBaseUrl);
+        assertThat(config.apiBaseUrl()).isEqualTo(expectedApiBaseUrl);
+        assertThat(config.uiBaseUrl()).isEqualTo(expectedUiBaseUrl);
     }
 
     @Test
@@ -40,12 +42,12 @@ class ProjectConfigTest {
 
     @Test
     @DisplayName("Параметр запуска важнее файла окружения")
-    @SetSystemProperty(key = "base.url", value = OVERRIDE_BASE_URL)
+    @SetSystemProperty(key = "api.base.url", value = OVERRIDE_BASE_URL)
     void shouldOverrideFileValueWhenSystemPropertyIsSet() {
         // Act
         var config = ConfigFactory.create(ProjectConfig.class);
 
         // Assert
-        assertThat(config.baseUrl()).isEqualTo(OVERRIDE_BASE_URL);
+        assertThat(config.apiBaseUrl()).isEqualTo(OVERRIDE_BASE_URL);
     }
 }
