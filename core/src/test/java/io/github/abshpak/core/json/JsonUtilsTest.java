@@ -29,18 +29,18 @@ class JsonUtilsTest {
     void shouldConvertJsonToObjectWhenJsonHasUnknownFields() {
         // Arrange
         var json = """
-            {
-              "name": "Hammer",
-              "quantity": 3,
-              "in_stock": true,
-              "brand": "ForgeFlex"
-            }
-            """;
+                {
+                  "name": "Hammer",
+                  "quantity": 3,
+                  "in_stock": true,
+                  "brand": "ForgeFlex"
+                }
+                """;
         var expected = ProductInfo.builder()
-                                  .name("Hammer")
-                                  .quantity(3)
-                                  .inStock(true)
-                                  .build();
+                .name("Hammer")
+                .quantity(3)
+                .inStock(true)
+                .build();
 
         // Act
         var actual = JsonUtils.fromJson(json, ProductInfo.class);
@@ -54,18 +54,18 @@ class JsonUtilsTest {
     void shouldUseApiFieldNameWhenFieldIsAnnotated() {
         // Arrange
         var product = ProductInfo.builder()
-                                 .name("Hammer")
-                                 .quantity(3)
-                                 .inStock(true)
-                                 .build();
+                .name("Hammer")
+                .quantity(3)
+                .inStock(true)
+                .build();
 
         // Act
         var actualJson = JsonUtils.toJson(product);
 
         // Assert
         assertThat(actualJson)
-            .contains("\"in_stock\":true")
-            .doesNotContain("inStock");
+                .contains("\"in_stock\":true")
+                .doesNotContain("inStock");
     }
 
     @Test
@@ -76,7 +76,7 @@ class JsonUtilsTest {
 
         // Act + Assert
         assertThatThrownBy(() -> JsonUtils.fromJson(invalidJson, ProductInfo.class))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessageContaining("ProductInfo");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("ProductInfo");
     }
 }

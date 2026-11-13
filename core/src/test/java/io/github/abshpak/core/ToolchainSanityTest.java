@@ -25,13 +25,13 @@ class ToolchainSanityTest {
 
         // Act
         var actual = SampleInfo.builder()
-                               .name(expectedName)
-                               .count(expectedCount)
-                               .build();
+                .name(expectedName)
+                .count(expectedCount)
+                .build();
 
         // Assert
         assertThat(actual)
-            .returns(expectedName, SampleInfo::getName)
-            .returns(expectedCount, SampleInfo::getCount);
+                .returns(expectedName, SampleInfo::getName)
+                .returns(expectedCount, SampleInfo::getCount);
     }
 }
