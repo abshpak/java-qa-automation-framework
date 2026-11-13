@@ -13,3 +13,9 @@ end_of_line = crlf
 
 [*.{yml,yaml}]
 indent_size = 2
+
+[*.java]
+ij_java_method_call_chain_wrap = normal
+ij_java_align_multiline_chained_methods = false
+ij_java_keep_line_breaks = true
+ij_continuation_indent_size = 8
