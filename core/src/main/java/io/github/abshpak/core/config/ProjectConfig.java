@@ -18,4 +18,13 @@ public interface ProjectConfig extends Config {
     @Key("timeout.seconds")
     @DefaultValue("10")
     int timeoutSeconds();
+
+    @Key("db.url")
+    String dbUrl();
+
+    @Key("db.username")
+    String dbUsername();
+
+    @Key("db.password")
+    String dbPassword();
 }
