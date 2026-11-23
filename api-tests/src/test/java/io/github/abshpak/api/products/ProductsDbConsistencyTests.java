@@ -1,6 +1,7 @@
 package io.github.abshpak.api.products;
 
 import io.github.abshpak.api.services.ToolshopService;
+import io.github.abshpak.core.config.Environments;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag(DB)
 @EnabledIfSystemProperty(
-        named = "env",
-        matches = "local",
+        named = Environments.PROPERTY,
+        matches = Environments.LOCAL,
         disabledReason = "Проверки в БД доступны только на локальном стенде: -Denv=local")
 class ProductsDbConsistencyTests {
 

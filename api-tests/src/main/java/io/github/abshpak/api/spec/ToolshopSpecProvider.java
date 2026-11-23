@@ -6,14 +6,12 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class ToolshopSpecProvider {
 
     private final ProjectConfig config;
-
-    public ToolshopSpecProvider(ProjectConfig config) {
-        this.config = config;
-    }
 
     public RequestSpecification request() {
         return new RequestSpecBuilder()

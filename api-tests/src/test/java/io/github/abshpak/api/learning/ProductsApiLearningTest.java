@@ -41,7 +41,6 @@ class ProductsApiLearningTest {
                 .body("data", not(empty()));
     }
 
-
     @Test
     @DisplayName("Ответ со списком товаров превращается в объекты")
     void shouldMapProductListToDtoWhenRequestingProducts() {

@@ -7,9 +7,10 @@ import org.junit.jupiter.api.util.SetSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SetSystemProperty(key = "env", value = "test")
+@SetSystemProperty(key = Environments.PROPERTY, value = ProjectConfigTest.TEST_ENV)
 class ProjectConfigTest {
 
+    static final String TEST_ENV = "test";
     private static final String OVERRIDE_BASE_URL = "https://override.example.com";
 
     @Test
