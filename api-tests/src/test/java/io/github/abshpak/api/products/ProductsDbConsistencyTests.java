@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
+import static io.github.abshpak.core.testing.Tags.DB;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Tag("db")
+@Tag(DB)
 @EnabledIfSystemProperty(
         named = "env",
         matches = "local",

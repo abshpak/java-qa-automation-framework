@@ -32,8 +32,9 @@
         <owner.version>1.0.12</owner.version>
         <jackson.version>2.23.0</jackson.version>
         <rest-assured.version>6.3.0</rest-assured.version>
-        <spring.version>7.0.10</spring.version>
+        <spring.version>7.1.0</spring.version>
         <mariadb-client.version>4.0.0</mariadb-client.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
@@ -77,6 +78,13 @@
                 <groupId>org.mariadb.jdbc</groupId>
                 <artifactId>mariadb-java-client</artifactId>
                 <version>${mariadb-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>

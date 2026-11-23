@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static io.github.abshpak.core.testing.Tags.LEARNING;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.not;
  * где тот же запрос идёт через Service → Client → Raw.
  * В рабочих тестах REST Assured напрямую не используется.
  */
-@Tag("learning")
+@Tag(LEARNING)
 class ProductsApiLearningTest {
 
     private final ProjectConfig config = ConfigFactory.create(ProjectConfig.class);
