@@ -19,3 +19,5 @@ ij_java_method_call_chain_wrap = normal
 ij_java_align_multiline_chained_methods = false
 ij_java_keep_line_breaks = true
 ij_continuation_indent_size = 8
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999

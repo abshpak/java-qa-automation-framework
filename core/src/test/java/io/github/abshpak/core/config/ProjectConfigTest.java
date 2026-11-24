@@ -43,7 +43,7 @@ class ProjectConfigTest {
 
     @Test
     @DisplayName("Параметр запуска важнее файла окружения")
-    @SetSystemProperty(key = "api.base.url", value = OVERRIDE_BASE_URL)
+    @SetSystemProperty(key = ProjectConfig.API_BASE_URL_KEY, value = OVERRIDE_BASE_URL)
     void shouldOverrideFileValueWhenSystemPropertyIsSet() {
         // Act
         var config = ConfigFactory.create(ProjectConfig.class);

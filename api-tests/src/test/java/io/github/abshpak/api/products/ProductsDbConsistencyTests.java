@@ -1,5 +1,6 @@
 package io.github.abshpak.api.products;
 
+import io.github.abshpak.api.BaseApiTest;
 import io.github.abshpak.api.services.ToolshopService;
 import io.github.abshpak.core.config.Environments;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         named = Environments.PROPERTY,
         matches = Environments.LOCAL,
         disabledReason = "Проверки в БД доступны только на локальном стенде: -Denv=local")
-class ProductsDbConsistencyTests {
+class ProductsDbConsistencyTests extends BaseApiTest {
 
     private final ToolshopService toolshop = new ToolshopService();
 
@@ -23,7 +24,7 @@ class ProductsDbConsistencyTests {
     @DisplayName("Имя и цена товара из API совпадают с записью в базе")
     void shouldStoreSameNameAndPriceInDbWhenProductReturnedByApi() {
         // Arrange
-        var expectedProduct = toolshop.products().getProducts().getData().get(0);
+        var expectedProduct = toolshop.products().getProducts().getData().getFirst();
 
         // Act
         var actualEntity = toolshop.db().products().findById(expectedProduct.getId());

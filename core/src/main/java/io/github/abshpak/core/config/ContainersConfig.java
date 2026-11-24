@@ -9,6 +9,8 @@ import org.aeonbits.owner.Config;
 })
 public interface ContainersConfig extends Config {
 
-    @Key("containers.mariadb.image")
+    String MARIADB_IMAGE_KEY = "containers.mariadb.image";
+
+    @Key(MARIADB_IMAGE_KEY)
     String mariadbImage();
 }

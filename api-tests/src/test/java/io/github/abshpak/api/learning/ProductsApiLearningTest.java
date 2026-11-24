@@ -8,11 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static io.github.abshpak.api.data.ProductsTestData.FIRST_PAGE;
+import static io.github.abshpak.api.raw.ProductsApiRaw.PRODUCTS_PATH;
 import static io.github.abshpak.core.testing.Tags.LEARNING;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Учебный пример: REST Assured напрямую, без слоёв фреймворка.
@@ -33,10 +36,10 @@ class ProductsApiLearningTest {
                 .baseUri(config.apiBaseUrl())
                 .log().all()
                 .when()
-                .get("/products")
+                .get(PRODUCTS_PATH)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .statusCode(OK.value())
                 .contentType(ContentType.JSON)
                 .body("data", not(empty()));
     }
@@ -44,21 +47,18 @@ class ProductsApiLearningTest {
     @Test
     @DisplayName("Ответ со списком товаров превращается в объекты")
     void shouldMapProductListToDtoWhenRequestingProducts() {
-        // Arrange
-        var expectedPage = 1;
-
         // Act
         var productsPage = given()
                 .baseUri(config.apiBaseUrl())
                 .when()
-                .get("/products")
+                .get(PRODUCTS_PATH)
                 .then()
-                .statusCode(200)
+                .statusCode(OK.value())
                 .extract()
                 .as(ProductsPageDto.class);
 
         // Assert
-        assertThat(productsPage.getCurrentPage()).isEqualTo(expectedPage);
+        assertThat(productsPage.getCurrentPage()).isEqualTo(FIRST_PAGE);
         assertThat(productsPage.getData())
                 .isNotEmpty()
                 .allSatisfy(product -> {

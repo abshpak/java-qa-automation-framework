@@ -9,22 +9,30 @@ import org.aeonbits.owner.Config;
 })
 public interface ProjectConfig extends Config {
 
-    @Key("api.base.url")
+    String API_BASE_URL_KEY = "api.base.url";
+    String UI_BASE_URL_KEY = "ui.base.url";
+    String TIMEOUT_SECONDS_KEY = "timeout.seconds";
+    String DEFAULT_TIMEOUT_SECONDS = "10";
+    String DB_URL_KEY = "db.url";
+    String DB_USERNAME_KEY = "db.username";
+    String DB_PASSWORD_KEY = "db.password";
+
+    @Key(API_BASE_URL_KEY)
     String apiBaseUrl();
 
-    @Key("ui.base.url")
+    @Key(UI_BASE_URL_KEY)
     String uiBaseUrl();
 
-    @Key("timeout.seconds")
-    @DefaultValue("10")
+    @Key(TIMEOUT_SECONDS_KEY)
+    @DefaultValue(DEFAULT_TIMEOUT_SECONDS)
     int timeoutSeconds();
 
-    @Key("db.url")
+    @Key(DB_URL_KEY)
     String dbUrl();
 
-    @Key("db.username")
+    @Key(DB_USERNAME_KEY)
     String dbUsername();
 
-    @Key("db.password")
+    @Key(DB_PASSWORD_KEY)
     String dbPassword();
 }

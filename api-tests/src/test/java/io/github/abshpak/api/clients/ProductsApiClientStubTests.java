@@ -1,8 +1,6 @@
 package io.github.abshpak.api.clients;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
-import io.github.abshpak.api.dto.ProductDto;
-import io.github.abshpak.api.dto.ProductsPageDto;
 import io.github.abshpak.api.raw.ProductsApiRaw;
 import io.github.abshpak.api.spec.ApiSettings;
 import io.github.abshpak.api.spec.ToolshopSpecProvider;
@@ -15,25 +13,32 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.List;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.containing;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.serverError;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static io.github.abshpak.api.data.ProductsTestData.firstPageOf;
+import static io.github.abshpak.api.data.ProductsTestData.stubProduct;
 import static io.github.abshpak.api.raw.ProductsApiRaw.PRODUCTS_PATH;
-import static io.github.abshpak.core.http.HttpStatusCodes.INTERNAL_SERVER_ERROR;
 import static io.github.abshpak.core.testing.Tags.STUB;
-import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.testcontainers.shaded.org.awaitility.Durations.ONE_SECOND;
+import static org.springframework.http.HttpHeaders.ACCEPT;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Tag(STUB)
 class ProductsApiClientStubTests {
 
-    private static final Duration CLIENT_TIMEOUT = ONE_SECOND;
-    private static final Duration SERVER_DELAY = ofSeconds(3);
-    private static final String ACCEPT_HEADER = "Accept";
-    private static final String JSON_MEDIA_TYPE = "application/json";
+    private static final Duration CLIENT_TIMEOUT = Duration.ofSeconds(1);
+    private static final Duration SERVER_DELAY = Duration.ofSeconds(3);
+    private static final int EXPECTED_REQUEST_COUNT = 1;
+    private static final String EMPTY_JSON_OBJECT = "{}";
+    private static final String TIMEOUT_MESSAGE_FRAGMENT = "timed out";
 
     @RegisterExtension
     static final WireMockExtension WIREMOCK = WireMockExtension.newInstance()
@@ -49,19 +54,10 @@ class ProductsApiClientStubTests {
     }
 
     @Test
-    @DisplayName("Ответ сервера превращается в объекты, запрос уходит с нужным заголовком")
-    void shouldMapResponseAndSendJsonAcceptHeaderWhenServerRespondsOk() {
+    @DisplayName("Ответ сервера превращается в объекты, запрос уходит один раз с нужным заголовком")
+    void shouldMapResponseAndSendSingleJsonRequestWhenServerRespondsOk() {
         // Arrange
-        var expectedProduct = ProductDto.builder()
-                .id("stub-id")
-                .name("Stub Hammer")
-                .price(new BigDecimal("12.50"))
-                .inStock(true)
-                .build();
-        var expectedPage = ProductsPageDto.builder()
-                .currentPage(1)
-                .data(List.of(expectedProduct))
-                .build();
+        var expectedPage = firstPageOf(stubProduct());
         WIREMOCK.stubFor(get(urlEqualTo(PRODUCTS_PATH))
                                  .willReturn(okJson(JsonUtils.toJson(expectedPage))));
 
@@ -73,8 +69,8 @@ class ProductsApiClientStubTests {
                 .usingRecursiveComparison()
                 .withComparatorForType(BigDecimal::compareTo, BigDecimal.class)
                 .isEqualTo(expectedPage);
-        WIREMOCK.verify(getRequestedFor(urlEqualTo(PRODUCTS_PATH))
-                                .withHeader(ACCEPT_HEADER, containing(JSON_MEDIA_TYPE)));
+        WIREMOCK.verify(EXPECTED_REQUEST_COUNT, getRequestedFor(urlEqualTo(PRODUCTS_PATH))
+                .withHeader(ACCEPT, containing(APPLICATION_JSON_VALUE)));
     }
 
     @Test
@@ -90,7 +86,7 @@ class ProductsApiClientStubTests {
         // Assert
         assertThat(thrown)
                 .isInstanceOf(AssertionError.class)
-                .hasMessageContaining(String.valueOf(INTERNAL_SERVER_ERROR));
+                .hasMessageContaining(String.valueOf(INTERNAL_SERVER_ERROR.value()));
     }
 
     @Test
@@ -98,7 +94,7 @@ class ProductsApiClientStubTests {
     void shouldFailWithTimeoutWhenServerRespondsSlowerThanTimeout() {
         // Arrange
         WIREMOCK.stubFor(get(urlEqualTo(PRODUCTS_PATH))
-                                 .willReturn(okJson("{}").withFixedDelay((int) SERVER_DELAY.toMillis())));
+                                 .willReturn(okJson(EMPTY_JSON_OBJECT).withFixedDelay((int) SERVER_DELAY.toMillis())));
 
         // Act
         var thrown = catchThrowable(() -> productsClient.getProducts());
@@ -106,6 +102,6 @@ class ProductsApiClientStubTests {
         // Assert
         assertThat(thrown)
                 .isNotNull()
-                .hasStackTraceContaining("timed out");
+                .hasStackTraceContaining(TIMEOUT_MESSAGE_FRAGMENT);
     }
 }
