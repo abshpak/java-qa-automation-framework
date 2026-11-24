@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 @RequiredArgsConstructor
 public class ProductsApiRaw {
 
-    private static final String PRODUCTS_PATH = "/products";
+    public static final String PRODUCTS_PATH = "/products";
 
     private final ToolshopSpecProvider spec;
 

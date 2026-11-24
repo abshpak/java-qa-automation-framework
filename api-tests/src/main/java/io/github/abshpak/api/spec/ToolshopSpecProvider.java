@@ -1,6 +1,5 @@
 package io.github.abshpak.api.spec;
 
-import io.github.abshpak.core.config.ProjectConfig;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -9,16 +8,15 @@ import io.restassured.specification.RequestSpecification;
 import lombok.RequiredArgsConstructor;
 
 import static io.restassured.config.HttpClientConfig.httpClientConfig;
-import static java.time.Duration.ofSeconds;
 
 @RequiredArgsConstructor
 public class ToolshopSpecProvider {
 
-    private final ProjectConfig config;
+    private final ApiSettings settings;
 
     public RequestSpecification request() {
         return new RequestSpecBuilder()
-                .setBaseUri(config.apiBaseUrl())
+                .setBaseUri(settings.baseUrl())
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .setConfig(restAssuredConfig())
@@ -26,11 +24,10 @@ public class ToolshopSpecProvider {
     }
 
     private RestAssuredConfig restAssuredConfig() {
-        var timeout = ofSeconds(config.timeoutSeconds());
         return RestAssuredConfig.config()
                 .httpClient(httpClientConfig()
-                                    .connectTimeout(timeout)
-                                    .readTimeout(timeout))
+                                    .connectTimeout(settings.timeout())
+                                    .readTimeout(settings.timeout()))
                 .logConfig(LogConfig.logConfig()
                                    .enableLoggingOfRequestAndResponseIfValidationFails());
     }
