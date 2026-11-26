@@ -10,7 +10,11 @@ import org.aeonbits.owner.Config;
 public interface ContainersConfig extends Config {
 
     String MARIADB_IMAGE_KEY = "containers.mariadb.image";
+    String WIREMOCK_IMAGE_KEY = "containers.wiremock.image";
 
     @Key(MARIADB_IMAGE_KEY)
     String mariadbImage();
+
+    @Key(WIREMOCK_IMAGE_KEY)
+    String wiremockImage();
 }
