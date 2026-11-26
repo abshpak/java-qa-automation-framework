@@ -2,6 +2,7 @@ package io.github.abshpak.api.learning;
 
 import io.github.abshpak.api.dto.ProductsPageDto;
 import io.github.abshpak.core.config.ProjectConfig;
+import io.qameta.allure.Feature;
 import io.restassured.http.ContentType;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
  * В рабочих тестах REST Assured напрямую не используется.
  */
 @Tag(LEARNING)
+@Feature(LEARNING)
 class ProductsApiLearningTest {
 
     private final ProjectConfig config = ConfigFactory.create(ProjectConfig.class);

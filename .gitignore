@@ -18,3 +18,6 @@ allure-report/
 # OS
 Thumbs.db
 .DS_Store
+
+.allure/
+allure-results/

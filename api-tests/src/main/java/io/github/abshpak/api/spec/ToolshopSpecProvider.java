@@ -1,5 +1,6 @@
 package io.github.abshpak.api.spec;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -20,6 +21,7 @@ public class ToolshopSpecProvider {
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .setConfig(restAssuredConfig())
+                .addFilter(new AllureRestAssured())
                 .build();
     }
 

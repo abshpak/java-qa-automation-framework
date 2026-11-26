@@ -3,11 +3,13 @@ package io.github.abshpak.api.products;
 import io.github.abshpak.api.BaseApiTest;
 import io.github.abshpak.api.services.ToolshopService;
 import io.github.abshpak.core.config.Environments;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
+import static io.github.abshpak.core.testing.Features.PRODUCTS;
 import static io.github.abshpak.core.testing.Tags.DB;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         named = Environments.PROPERTY,
         matches = Environments.LOCAL,
         disabledReason = "Проверки в БД доступны только на локальном стенде: -Denv=local")
+@Feature(PRODUCTS)
 class ProductsDbConsistencyTests extends BaseApiTest {
 
     private final ToolshopService toolshop = new ToolshopService();

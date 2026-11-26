@@ -6,6 +6,7 @@ import io.github.abshpak.api.raw.ProductsApiRaw;
 import io.github.abshpak.api.spec.ApiSettings;
 import io.github.abshpak.api.spec.ToolshopSpecProvider;
 import io.github.abshpak.core.json.JsonUtils;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +28,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static io.github.abshpak.api.data.ProductsTestData.firstPageOf;
 import static io.github.abshpak.api.data.ProductsTestData.stubProduct;
 import static io.github.abshpak.api.raw.ProductsApiRaw.PRODUCTS_PATH;
+import static io.github.abshpak.core.testing.Features.API_CLIENT;
 import static io.github.abshpak.core.testing.Tags.STUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -36,6 +38,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Tag(STUB)
 @Testcontainers(disabledWithoutDocker = true)
+@Feature(API_CLIENT)
 class ProductsApiClientContainerTests {
 
     private static final Duration CLIENT_TIMEOUT = Duration.ofSeconds(5);

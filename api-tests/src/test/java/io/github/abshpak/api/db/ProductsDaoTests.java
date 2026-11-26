@@ -3,6 +3,7 @@ package io.github.abshpak.api.db;
 import io.github.abshpak.api.db.dao.ProductsDao;
 import io.github.abshpak.api.db.support.MariaDbContainers;
 import io.github.abshpak.api.db.support.SeedProduct;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -13,11 +14,13 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.mariadb.MariaDBContainer;
 
+import static io.github.abshpak.core.testing.Features.DATABASE;
 import static io.github.abshpak.core.testing.Tags.DB;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag(DB)
 @Testcontainers(disabledWithoutDocker = true)
+@Feature(DATABASE)
 class ProductsDaoTests {
 
     private static final String MISSING_PRODUCT_ID = "no-such-id";
